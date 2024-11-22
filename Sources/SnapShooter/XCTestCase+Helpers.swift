@@ -25,14 +25,14 @@ public extension XCTestCase {
         }
         
         if similarity < similarityThreshold {
-            let differenceImageURL = temporarySnapshotFolder(for: file).appendingPathComponent("Difference.png")
+            let differenceImageURL = temporarySnapshotFolder(for: file).appendingPathComponent("Difference-\(name).png")
             let snapshotURL = temporarySnapshotFolder(for: file).appendingPathComponent("\(name).png")
-            if let diffImage = try? snapshot.highlightDifference(between: storedSnapshot) {
-                saveTemporaryImage(image: diffImage, on: differenceImageURL)
-                attachTemporaryImage(image: diffImage, name: "Diff")
+            if let differenceImage = try? snapshot.highlightDifference(between: storedSnapshot) {
+                saveTemporaryImage(image: differenceImage, on: differenceImageURL)
+                attachTemporaryImage(image: differenceImage, name: "Difference")
             }
             
-            attachTemporaryImage(image: snapshot, name: "Stored")
+            attachTemporaryImage(image: snapshot, name: "New_Snapshot")
             saveTemporaryImage(
                 image: snapshot,
                 on: snapshotURL
@@ -41,7 +41,7 @@ public extension XCTestCase {
             XCTFail(
                 """
                 
-                Sir, we have a problem! Snapshot failed with similarity: \(similarity) 😭😭
+                Sir, we have a problem! Snapshot failed with similarity: \(similarity) 🥶🥶
                 
                 Stored snapshot: \(storedSnapshotURL)
                 
@@ -49,7 +49,14 @@ public extension XCTestCase {
                 
                 New snapshot: \(snapshotURL)
                 
-                🤕 Please see attachments for more details.
+                🤕 Please see attachments for more details. ⚠️
+                
+                
+                ⬜🟥🟥🟥
+                🟥🟥🟦🟦
+                🟥🟥🟥🟥
+                ⬜🟥🟥🟥
+                ⬜🟥⬜🟥
                 
                 """,
                 file: file,
@@ -72,9 +79,9 @@ public extension XCTestCase {
             try snapshot.pngData()?.write(to: snapshotURL)
         } catch {
             XCTFail("""
-                    Sir, we have a problem! Failed to save snapshot at \(snapshotURL) 😭😭
-                    That is the error: \(error)
-                    Be careful, Sir!
+                    Sir, we have a problem! Failed to save snapshot at \(snapshotURL) 🥶🥶
+                    That is the error: \(error) 
+                    Be careful, Sir! ⚠️
                     """,
                     file: file,
                     line: line
