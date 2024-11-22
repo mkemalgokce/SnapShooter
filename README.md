@@ -1,4 +1,4 @@
-# SNAPSHOOTER  <img src="https://github.com/user-attachments/assets/36e7b621-20a5-48a1-b809-04883c615077" alt="SnapShooter Logo" align="center">
+# SNAPSHOOTER  <img src="https://github.com/user-attachments/assets/5ee57aa2-1446-46cb-9ab1-1e72afde1961" alt="SnapShooter Logo" align="center" width=128>
 
 
 
