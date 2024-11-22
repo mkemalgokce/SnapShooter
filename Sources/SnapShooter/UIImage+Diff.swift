@@ -51,7 +51,6 @@ extension UIImage {
         }
         
         let similarity = compareAllPixels(
-            perPixelTolerance: 0.1,
             pixelCount: pixels.count / 4,
             referencePixels: pixels,
             imagePixels: otherPixels
@@ -88,7 +87,7 @@ extension UIImage {
 }
 
 fileprivate func compareAllPixels(
-    perPixelTolerance: CGFloat,
+    perPixelTolerance: CGFloat = 0,
     pixelCount: Int,
     referencePixels: [UInt8],
     imagePixels: [UInt8]

@@ -5,7 +5,7 @@ import XCTest
 public extension XCTestCase {
     func assert(
         _ snapshot: UIImage,
-        threshold similarityThreshold: Float = 0.95,
+        threshold similarityThreshold: Float = 0.98,
         file: StaticString = #filePath,
         line: UInt = #line,
         function: String = #function
