@@ -71,15 +71,19 @@ extension UIImage {
         
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { context in
-            context.cgContext.draw(cgImage, in: CGRect(origin: .zero, size: size))
-            context.cgContext.setAlpha(0.5)
-            context.cgContext.beginTransparencyLayer(auxiliaryInfo: nil)
-            context.cgContext.draw(otherCgImage, in: CGRect(origin: .zero, size: size))
-            context.cgContext.setBlendMode(.difference)
-            context.cgContext.setFillColor(UIColor.white.cgColor)
-            context.cgContext.fill(CGRect(origin: .zero, size: size))
-            context.cgContext.endTransparencyLayer()
+            let cgContext = context.cgContext
+            cgContext.translateBy(x: 0, y: size.height)
+            cgContext.scaleBy(x: 1.0, y: -1.0)
+            cgContext.draw(cgImage, in: CGRect(origin: .zero, size: size))
+            cgContext.setAlpha(0.5)
+            cgContext.beginTransparencyLayer(auxiliaryInfo: nil)
+            cgContext.draw(otherCgImage, in: CGRect(origin: .zero, size: size))
+            cgContext.setBlendMode(.difference)
+            cgContext.setFillColor(UIColor.white.cgColor)
+            cgContext.fill(CGRect(origin: .zero, size: size))
+            cgContext.endTransparencyLayer()
         }
+        
     }
 }
 
