@@ -2,7 +2,7 @@
 
 import XCTest
 
-extension XCTestCase {
+public extension XCTestCase {
     func assert(
         _ snapshot: UIImage,
         threshold similarityThreshold: Float = 0.95,
