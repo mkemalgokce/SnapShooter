@@ -1,4 +1,6 @@
-# SnapShooter
+# SNAPSHOOTER  <img src="https://github.com/user-attachments/assets/36e7b621-20a5-48a1-b809-04883c615077" alt="SnapShooter Logo" align="center">
+
+
 
 A lightweight and efficient library for snapshot testing UIViewController instances. This library allows you to capture and compare snapshots of your views, calculate their similarity, and highlight differences when they occur. It supports saving snapshots and difference images as attachments in test reports and storing them in the temporary folder for debugging purposes.
 
@@ -64,6 +66,3 @@ Contributions are welcome! If you find a bug or want to suggest a feature, pleas
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-
-
