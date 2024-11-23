@@ -23,7 +23,7 @@ final class UIImageDiffTests: XCTestCase {
         
         let pixelBuffer = try image.pixelBuffer()
         
-        XCTAssertEqual(pixelBuffer.count, Int(size.width * size.height * 4) * 9) // 4 bytes per pixel
+        XCTAssertEqual(pixelBuffer.count, Int(size.width * size.height * 4) * 9) 
     }
     
     func testSimilarity_WhenImagesAreDifferentSize_ThrowsImagesAreDifferentSizeError() {
@@ -88,7 +88,7 @@ final class UIImageDiffTests: XCTestCase {
         
         let highlightedImage = try image1.highlightDifference(between: image2)
         
-        XCTAssertNotNil(highlightedImage.cgImage) // Ensure the image is generated
+        XCTAssertNotNil(highlightedImage.cgImage)
     }
     
     func test_highlightDifference_whenImagesAreEmpty_throwsEmptyCGImageError() {

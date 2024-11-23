@@ -41,12 +41,20 @@ extension UIImage {
     
     
     func similarity(between other: UIImage) throws -> Float {
-        guard size == other.size else {
+        guard let pngData = pngData(),
+              let otherPngData = other.pngData(),
+              let firstImage = UIImage(data: pngData, scale: 3.0),
+              let secondImage = UIImage(data: otherPngData, scale: 3.0)
+        else {
+            throw Error.emptyCGImage
+        }
+        
+        guard firstImage.size == secondImage.size else {
             throw Error.imagesAreDifferentSize
         }
         
-        guard let pixels = try? pixelBuffer(),
-                let otherPixels = try? other.pixelBuffer() else {
+        guard let pixels = try? firstImage.pixelBuffer(),
+                let otherPixels = try? secondImage.pixelBuffer() else {
                 throw Error.imageBuffersCouldNotBeCreated
         }
         
