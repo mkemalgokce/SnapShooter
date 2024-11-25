@@ -5,7 +5,6 @@ import XCTest
 public extension XCTestCase {
     func assert(
         _ snapshot: UIImage,
-        threshold similarityThreshold: Float = 0.99,
         file: StaticString = #filePath,
         line: UInt = #line,
         function: String = #function
@@ -14,20 +13,15 @@ public extension XCTestCase {
         let name = makeSnapshotName(function: function)
         let storedSnapshotURL = snapshotFolderURL.appendingPathComponent("\(name).png")
         
-        guard let storedSnapshot = loadStoredImage(from: storedSnapshotURL, file: file, line: line) else {
+        guard let storedSnapshot = loadStoredSnapshot(from: storedSnapshotURL, file: file, line: line) else {
             record(snapshot, file: file, line: line, function: function)
             return
         }
         
-        guard let similarity = try? snapshot.similarity(between: storedSnapshot) else {
-            XCTFail("Failed to calculate snapshot difference", file: file, line: line)
-            return
-        }
-        
-        if similarity < similarityThreshold {
+        if storedSnapshot.data != snapshot.pngData() {
             let differenceImageURL = temporarySnapshotFolder(for: file).appendingPathComponent("Difference-\(name).png")
             let snapshotURL = temporarySnapshotFolder(for: file).appendingPathComponent("\(name).png")
-            if let differenceImage = try? snapshot.highlightDifference(between: storedSnapshot) {
+            if let differenceImage = try? snapshot.highlightDifference(between: storedSnapshot.image) {
                 saveTemporaryImage(image: differenceImage, on: differenceImageURL)
                 attachTemporaryImage(image: differenceImage, name: "Difference")
             }
@@ -41,7 +35,7 @@ public extension XCTestCase {
             XCTFail(
                 """
                 
-                Sir, we have a problem! Snapshot failed with similarity: \(similarity) 🥶🥶
+                Sir, we have a problem! Snapshot failed with similarity: \(0.0) 🥶🥶
                 
                 Stored snapshot: \(storedSnapshotURL)
                 
@@ -90,14 +84,14 @@ public extension XCTestCase {
     }
     
     // MARK: - Helpers
-    private func loadStoredImage(from url: URL, file: StaticString = #filePath, line: UInt = #line) -> UIImage? {
+    private func loadStoredSnapshot(from url: URL, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, image: UIImage)? {
         guard let storedSnapshotData = try? Data(contentsOf: url) else {
             return nil
         }
         guard let storedImage = UIImage(data: storedSnapshotData, scale: 3.0) else {
             return nil
         }
-        return storedImage
+        return (storedSnapshotData, storedImage)
     }
     
     private func snapshotFolder(for file: StaticString) -> URL {
